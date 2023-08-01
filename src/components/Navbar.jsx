@@ -63,7 +63,7 @@ export default function Navbar(props) {
                       </li>
                       <li>
                         <Link class="dropdown-item" to="">
-                          Log out
+                          Log Out
                         </Link>
                       </li>
                     </ul>
