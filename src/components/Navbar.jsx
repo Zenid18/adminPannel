@@ -1,7 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getData, storageKey } from "../constants/storage";
+
 
 export default function Navbar(props) {
+  const navigate = useNavigate()
+  const handleLogout = () => {
+    localStorage.removeItem(storageKey?.AUTH_TOKEN);
+    navigate('/')
+
+  }
   return (
     <header className="header px-4 py-3 position-fixed transition">
       <nav className="navbar nav-bar-main navbar-expand-lg rounded-2 ">
@@ -62,9 +70,9 @@ export default function Navbar(props) {
                         </Link>
                       </li>
                       <li>
-                        <Link class="dropdown-item" to="">
+                        <span onClick={() => handleLogout()} class="dropdown-item">
                           Log Out
-                        </Link>
+                        </span>
                       </li>
                     </ul>
                   </div>

@@ -3,12 +3,12 @@ import axios from "axios";
 export const post = async (url, token, body, hide = false) => {
   const headers = token
     ? {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      }
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    }
     : {
-        "Content-Type": "application/json", 
-      };
+      "Content-Type": "application/json",
+    };
 
   const completeUrl = Url.BASE_URL + url;
   const data = JSON.stringify(body);
@@ -42,7 +42,7 @@ export const get = async (url, token, hide = false) => {
     console.log("completeUrl", completeUrl);
 
     const response = await axios.get(completeUrl, { headers });
-
+    console.log(response, 'responseeeeeeeeeeee')
     if (response.status === 401) {
       window.location.replace("/");
     }

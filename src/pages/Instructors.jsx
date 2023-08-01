@@ -1,25 +1,76 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../layout/layout";
-import { getAllTeachers } from "../redux/services/otherServices/Teacher";
+import { addTeacher, getAllTeachers } from "../redux/services/otherServices/Teacher";
 import { useDispatch } from "react-redux";
 import * as url from '../constants/urls'
+import { toast } from "react-toastify";
+import * as Yup from "yup";
+import { useFormik } from "formik"
 
 export default function Instructors() {
   const dispatch = useDispatch()
   const [sidebarActive, setSidebarActive] = useState("instructors");
   const [showPassInstructors, setShowPassInstructors] = useState(false);
   const [showConPassInstructors, setShowConPassInstructors] = useState(false);
-  const[instructorData,setInstructorData] = useState([])
+  const [instructorData, setInstructorData] = useState([])
+  // const [closeModal, setCloseModal] = useState("")
 
-  useEffect(()=>{     
+
+
+  useEffect(() => {
     handleTeacherListing()
-  },[])
-   const handleTeacherListing = async()=>{
+  }, [])
+  const handleTeacherListing = async () => {
     const res = await dispatch(getAllTeachers())
-    if(res?.status == 200 || res?.success == true){
- setInstructorData(res?.data)
-    } 
-   }
+    if (res?.status == 200 || res?.success == true) {
+      setInstructorData(res?.data)
+    }
+  }
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      userCode: "",
+      password: "",
+      confirm_password: ""
+    },
+    validationSchema: Yup.object({
+      firstName: Yup.string().required('First Name is required'),
+      lastName: Yup.string().required('Last Name is required'),
+      userCode: Yup.string().required("User Code is required"),
+      email: Yup.string().email('Invalid email address').required('Email is required'),
+      password: Yup.string().required('Password is required').min(8, 'Password must be at least 8 characters'),
+      confirmPass: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm Password is required'),
+    }),
+    onSubmit: async () => {
+      const body = {
+        first_name: formik?.values?.firstName,
+        last_name: formik?.values?.lastName,
+        email_id: formik?.values?.email,
+        password: formik?.values?.password,
+        confirm_password: formik?.values?.confirmPass,
+        user_code: formik?.values?.userCode,
+      }
+      const res = await dispatch(addTeacher(body));
+      if (res?.status == 200 || res?.success == true) {
+        document.getElementById("closeAddModal").click()
+        toast.success(res?.message);
+        handleTeacherListing()
+        formik.setFieldValue('firstName', '');
+        formik.setFieldValue('lastName', '')
+        formik.setFieldValue('email', '')
+        formik.setFieldValue('password', '')
+        formik.setFieldValue('confirmPass', '')
+        formik.setFieldValue('userCode', '')
+      } else {
+        toast.error(res?.message);
+      }
+    }
+  });
+
   return (
     <div>
       <Layout sidebarActive={sidebarActive} setSidebarActive={setSidebarActive}>
@@ -64,7 +115,7 @@ export default function Instructors() {
                     <th>Action</th>
                   </tr>
                 </thead>
-                {instructorData?.map((item)=>{ 
+                {instructorData?.length != 0 && instructorData?.map((item) => {
                   return (
                     <tbody key={item?.teacher_id}>
                       <tr>
@@ -87,7 +138,7 @@ export default function Instructors() {
                               }
                               alt="table-title-img"
                             />
-                            <p>{item?.first_name + item?.last_name}</p>
+                            <p>{item?.first_name + " " + item?.last_name}</p>
                           </div>
                         </td>
                         <td>{item?.created_at || "N/A"}</td>
@@ -119,7 +170,7 @@ export default function Instructors() {
                     </tbody>
                   );
                 })}
-              
+
               </table>
             </div>
           </div>
@@ -137,6 +188,7 @@ export default function Instructors() {
                 <div className="heading position-relative pt-3">
                   <h3 className="text-center fw-600">Add Instructors</h3>
                   <button
+                    id="closeAddModal"
                     className="border-0 bg-transparent"
                     data-bs-dismiss="modal"
                     aria-label="Close"
@@ -145,44 +197,74 @@ export default function Instructors() {
                       width={25}
                       src="/images/close-icon.png"
                       alt="close-icon"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
+
                     />
                   </button>
                 </div>
-                <form className="p-5">
+                <form onSubmit={formik.handleSubmit} className="p-5">
                   <div className="input-box mb-4">
                     <input
+                      name="firstName"
                       type="text"
+                      onChange={formik.handleChange}
+                      value={formik.values.firstName}
+                      onBlur={formik.handleBlur}
                       placeholder="First Name"
-                      className="w-100 py-2 ps-4 rounded-pill transition"
+                      className="w-100 py-2 ps-4 rounded-pill transition "
                     />
+                    {formik.touched.firstName && formik.errors.firstName && (
+                      <span className="text-danger fs-6">{formik.errors.firstName}</span>
+                    )}
                   </div>
                   <div className="input-box mb-4">
                     <input
                       type="text"
                       placeholder="Last Name"
+                      value={formik.values.lastName}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      name="lastName"
                       className="w-100 py-2 ps-4 rounded-pill transition"
                     />
+                    {formik.touched.lastName && formik.errors.lastName && (
+                      <span className="text-danger fs-6">{formik.errors.lastName}</span>
+                    )}
                   </div>
                   <div className="input-box mb-4">
                     <input
+                      placeholder="Email"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.email}
                       type="email"
-                      placeholder="Email Address"
+                      name="email"
                       className="w-100 py-2 ps-4 rounded-pill transition"
                     />
+                    {formik.touched.email && formik.errors.email && (
+                      <span className="text-danger fs-6">{formik.errors.email}</span>
+                    )}
                   </div>
                   <div className="input-box mb-4">
                     <input
-                      type="text"
+                      name="userCode"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.userCode}
                       placeholder="User Code"
                       className="w-100 py-2 ps-4 rounded-pill transition"
                     />
+                    {formik.touched.userCode && formik.errors.userCode && (
+                      <span className="text-danger fs-6">{formik.errors.userCode}</span>
+                    )}
                   </div>
                   <div className="input-box mb-4 position-relative">
                     <input
                       type={showPassInstructors ? "text" : "password"}
-                      placeholder="Password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      name="password"
+                      placeholder="password"
                       className="w-100 py-2 ps-4 rounded-pill transition"
                     />
                     <button
@@ -224,11 +306,19 @@ export default function Instructors() {
                         </span>
                       )}
                     </button>
+                    {formik.touched.password && formik.errors.password && (
+                      <span className="text-danger fs-6">{formik.errors.password}</span>
+                    )}
+
                   </div>
                   <div className="input-box mb-4 position-relative">
                     <input
                       type={showConPassInstructors ? "text" : "password"}
                       placeholder="Confirm Password"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.confirmPass}
+                      name="confirmPass"
                       className="w-100 py-2 ps-4 rounded-pill transition"
                     />
                     <button
@@ -270,8 +360,12 @@ export default function Instructors() {
                         </span>
                       )}
                     </button>
+                    {formik.touched.confirmPass && formik.errors.confirmPass && (
+                      <span className="text-danger fs-6">{formik.errors.confirmPass}</span>
+                    )}
                   </div>
-                  <button className="add-btn border-0 w-100 rounded-pill py-2 white-text fw-600">
+                  <button
+                    disabled={formik.isSubmitting} type="submit" className="add-btn border-0 w-100 rounded-pill py-2 white-text fw-600">
                     Add
                   </button>
                 </form>

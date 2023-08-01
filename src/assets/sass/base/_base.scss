@@ -5,6 +5,7 @@ body {
   overflow-x: hidden;
   font-family: poppins;
 }
+
 ul,
 p,
 h1,
@@ -37,7 +38,7 @@ section {
   --l-pink: #fff3f9;
   --green: #008E17;
   --l-green: #edffef;
-  --red-linear: linear-gradient(90deg,#f55454,#f24f4a,#ee4a40,#ea4636,#e5422b);
+  --red-linear: linear-gradient(90deg, #f55454, #f24f4a, #ee4a40, #ea4636, #e5422b);
 
   //FONTS VAR
   --fs-8: 0.5rem;
@@ -63,86 +64,97 @@ section {
   color: var(--white) !important;
   fill: var(--white) !important;
 }
+
 .black-text {
   color: var(--black) !important;
   fill: var(--black) !important;
 }
+
 .transition {
   transition: all 0.3s ease-in-out !important;
 }
+
 .cursor-pointer {
   cursor: pointer !important;
 }
+
 .fw-500 {
   font-weight: 500 !important;
 }
+
 .fw-600 {
   font-weight: 600 !important;
 }
-input:focus-visible, select:focus-visible{
+
+input:focus-visible,
+select:focus-visible {
   outline: unset;
 }
-  .checkbox-wrapper-2 .ikxBAC {
-    appearance: none;
-    background-color: #dfe1e4;
-    border-radius: 72px;
-    border-style: none;
-    flex-shrink: 0;
-    height: 20px;
-    width: 35px;
-  }
 
-  .checkbox-wrapper-2 .ikxBAC::before {
-    bottom: -6px;
-    content: "";
-    left: -6px;
-    position: absolute;
-    right: -6px;
-    top: -6px;
-  }
-
-  .checkbox-wrapper-2 .ikxBAC,
-  .checkbox-wrapper-2 .ikxBAC::after {
-    transition: all 100ms ease-out;
-  }
-
-  .checkbox-wrapper-2 .ikxBAC::after {
-    background-color: #fff;
-    border-radius: 50%;
-    content: "";
-    height: 14px;
-    left: 3px;
-    position: absolute;
-    top: 3px;
-    width: 14px;
-  }
-
-  .checkbox-wrapper-2 input[type=checkbox] {
-    cursor: default;
-  }
-
-  .checkbox-wrapper-2 .ikxBAC:hover {
-    background-color: #c9cbcd;
-    transition-duration: 0s;
-  }
-
-  .checkbox-wrapper-2 .ikxBAC:checked {
-    background-color: var(--green);
-  }
-
-  .checkbox-wrapper-2 .ikxBAC:checked::after {
-    background-color: #fff;
-    left: 18px;
-  }
-
-  .checkbox-wrapper-2 :focus:not(.focus-visible) {
-    outline: 0;
-  }
-
-  .checkbox-wrapper-2 .ikxBAC:checked:hover {
-      background-color: var(--green);
-  }
-
-
-@media all and (min-width: 320px) and (max-width: 767px) {
+.error-border {
+  border: 1px solid var(--red) !important;
 }
+
+.checkbox-wrapper-2 .ikxBAC {
+  appearance: none;
+  background-color: #dfe1e4;
+  border-radius: 72px;
+  border-style: none;
+  flex-shrink: 0;
+  height: 20px;
+  width: 35px;
+}
+
+.checkbox-wrapper-2 .ikxBAC::before {
+  bottom: -6px;
+  content: "";
+  left: -6px;
+  position: absolute;
+  right: -6px;
+  top: -6px;
+}
+
+.checkbox-wrapper-2 .ikxBAC,
+.checkbox-wrapper-2 .ikxBAC::after {
+  transition: all 100ms ease-out;
+}
+
+.checkbox-wrapper-2 .ikxBAC::after {
+  background-color: #fff;
+  border-radius: 50%;
+  content: "";
+  height: 14px;
+  left: 3px;
+  position: absolute;
+  top: 3px;
+  width: 14px;
+}
+
+.checkbox-wrapper-2 input[type=checkbox] {
+  cursor: default;
+}
+
+.checkbox-wrapper-2 .ikxBAC:hover {
+  background-color: #c9cbcd;
+  transition-duration: 0s;
+}
+
+.checkbox-wrapper-2 .ikxBAC:checked {
+  background-color: var(--green);
+}
+
+.checkbox-wrapper-2 .ikxBAC:checked::after {
+  background-color: #fff;
+  left: 18px;
+}
+
+.checkbox-wrapper-2 :focus:not(.focus-visible) {
+  outline: 0;
+}
+
+.checkbox-wrapper-2 .ikxBAC:checked:hover {
+  background-color: var(--green);
+}
+
+
+@media all and (min-width: 320px) and (max-width: 767px) {}
