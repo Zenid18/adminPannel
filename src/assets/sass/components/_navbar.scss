@@ -11,6 +11,12 @@
         h2{
             font-size: var(--fs-20);
         }
+                .profile-box{
+            .dropdown-menu{
+                left: unset;
+                right: 0;
+            }
+        }
     }
 
 }
