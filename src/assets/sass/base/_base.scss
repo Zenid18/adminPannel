@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: poppins;
+}
+ul,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+section {
+  padding: 70px 0;
+}
+
+:root {
+
+  // root
+  --black: #000;
+  --white: #fff;
+  --l-grey: #F6F6F6;
+  --grey: #C9C9C9;
+  --d-grey: #787A8D;
+  --blue: #2F327D;
+  --l-blue: #809FB8;
+  --sky-blue: #F5F7FA;
+  --red: #D30000;
+  --orange: #FFB800;
+  --pink: #FFC7E4;
+  --l-pink: #fff3f9;
+  --green: #008E17;
+  --l-green: #edffef;
+  --red-linear: linear-gradient(90deg,#f55454,#f24f4a,#ee4a40,#ea4636,#e5422b);
+
+  //FONTS VAR
+  --fs-8: 0.5rem;
+  --fs-10: 0.625rem;
+  --fs-12: 0.75rem;
+  --fs-13: 0.813rem;
+  --fs-14: 0.875rem;
+  --fs-15: 0.9375rem;
+  --fs-16: 1rem;
+  --fs-18: 1.125rem;
+  --fs-20: 1.25rem;
+  --fs-24: 1.5rem;
+  --fs-25: 1.5625rem;
+  --fs-30: 1.875rem;
+  --fs-33: 2.0625rem;
+  --fs-35: 2.188rem;
+  --fs-45: 2.8125rem;
+  --fs-50: 3.125rem;
+  --fs-55: 3.438rem;
+}
+
+.white-text {
+  color: var(--white) !important;
+  fill: var(--white) !important;
+}
+.black-text {
+  color: var(--black) !important;
+  fill: var(--black) !important;
+}
+.transition {
+  transition: all 0.3s ease-in-out !important;
+}
+.cursor-pointer {
+  cursor: pointer !important;
+}
+.fw-500 {
+  font-weight: 500 !important;
+}
+.fw-600 {
+  font-weight: 600 !important;
+}
+input:focus-visible, select:focus-visible{
+  outline: unset;
+}
+  .checkbox-wrapper-2 .ikxBAC {
+    appearance: none;
+    background-color: #dfe1e4;
+    border-radius: 72px;
+    border-style: none;
+    flex-shrink: 0;
+    height: 20px;
+    width: 35px;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC::before {
+    bottom: -6px;
+    content: "";
+    left: -6px;
+    position: absolute;
+    right: -6px;
+    top: -6px;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC,
+  .checkbox-wrapper-2 .ikxBAC::after {
+    transition: all 100ms ease-out;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC::after {
+    background-color: #fff;
+    border-radius: 50%;
+    content: "";
+    height: 14px;
+    left: 3px;
+    position: absolute;
+    top: 3px;
+    width: 14px;
+  }
+
+  .checkbox-wrapper-2 input[type=checkbox] {
+    cursor: default;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:hover {
+    background-color: #c9cbcd;
+    transition-duration: 0s;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:checked {
+    background-color: var(--green);
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:checked::after {
+    background-color: #fff;
+    left: 18px;
+  }
+
+  .checkbox-wrapper-2 :focus:not(.focus-visible) {
+    outline: 0;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:checked:hover {
+      background-color: var(--green);
+  }
+
+
+@media all and (min-width: 320px) and (max-width: 767px) {
+}

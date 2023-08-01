@@ -1,0 +1,10 @@
+.children-div{
+   margin-top: 92px;
+   margin-left: 320px;
+   background: var(--l-grey);
+}
+@media screen and (min-width: 320px) and (max-width: 992px){
+.children-div{
+   margin-left: 0 !important;
+}
+}

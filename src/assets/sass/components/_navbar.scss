@@ -1,0 +1,24 @@
+.header{
+    width: calc(100% - 320px);
+    right: 0;
+    top: 0;
+    background-color: var(--red);
+    z-index: 888;
+    .nav-bar-main{
+        background-color: var(--white);
+        padding: 10px 10px 10px 20px;
+        min-height: 60px;
+        h2{
+            font-size: var(--fs-20);
+        }
+    }
+
+}
+@media screen and (min-width: 320px) and (max-width: 992px){
+.header{
+    width: 100% !important;
+}
+    .nav-bar-main{
+        padding: 0 !important;
+    }
+}

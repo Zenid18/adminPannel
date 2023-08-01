@@ -1,0 +1,76 @@
+.instructors-box{
+    background: var(--white);
+    .heading{
+        h2{
+            font-size: var(--fs-25);
+        }
+        .add-instructors{
+            .add-instructor-btn{
+                background: var(--green);
+            }
+        }
+    }
+      .instructors-table{
+    table{
+      tr, th, td{
+        white-space: nowrap;
+                color: var(--l-blue);
+        font-size: var(--fs-13);
+        padding: 15px 10px 15px 35px;
+      }
+    thead{
+      background: var(--sky-blue);
+    }
+    tbody{  
+        .action{
+            button{
+                box-shadow: 0px 4px 15px 0px rgba(178, 212, 226, 0.64);
+
+            }
+        }
+    }
+  }
+  }
+}
+.add-instructors-modal{
+    .heading{
+        h3{
+            font-size: var(--fs-20);
+        }
+        button{
+            position: absolute;
+            top: -8px;
+            right: -7px;
+        }
+    }
+    form{
+        .input-box{
+            input{
+                   border:1px solid transparent;
+                background: var(--l-grey);
+                
+                font-size: var(--fs-15);
+                &::placeholder{
+                    color: var(--grey);
+                }
+                &:focus{
+                    border:1px solid var(--red) !important;
+                    background-color: var(--l-pink);
+                    &::placeholder{
+                    color: var(--black);
+                    
+                    }
+                }
+            }
+            .pass-btn{
+                position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+            }
+        }
+        .add-btn{
+            background: var(--red-linear);
+        }
+    }
+}
