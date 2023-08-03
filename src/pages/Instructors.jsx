@@ -31,14 +31,12 @@ export default function Instructors() {
       firstName: "",
       lastName: "",
       email: "",
-      userCode: "",
       password: "",
       confirm_password: ""
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required('First Name is required'),
       lastName: Yup.string().required('Last Name is required'),
-      userCode: Yup.string().required("User Code is required"),
       email: Yup.string().email('Invalid email address').required('Email is required'),
       password: Yup.string().required('Password is required').min(8, 'Password must be at least 8 characters'),
       confirmPass: Yup.string()
@@ -94,19 +92,10 @@ export default function Instructors() {
             </div>
           </div>
           <div className="instructors-table">
-            <div className="table-responsive">
+            <div className="table-responsive overflow-auto">
               <table className="w-100">
                 <thead>
                   <tr>
-                    <th>
-                      {" "}
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckDefault"
-                      />
-                    </th>
                     <th>Name</th>
                     <th>Active since!</th>
                     <th>User code</th>
@@ -115,62 +104,56 @@ export default function Instructors() {
                     <th>Action</th>
                   </tr>
                 </thead>
-                {instructorData?.length != 0 && instructorData?.map((item) => {
-                  return (
-                    <tbody key={item?.teacher_id}>
-                      <tr>
-                        <td>
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckDefault"
-                          />
-                        </td>
-                        <td>
-                          <div className="title-box d-flex align-items-center gap-2">
-                            <img
-                              style={{ height: "50px", width: "50px" }}
-                              src={
-                                item?.teacher_img
-                                  ? url?.BASE_URL + item?.teacher_img
-                                  : "/images/table-title-img.png"
-                              }
-                              alt="table-title-img"
-                            />
-                            <p>{item?.first_name + " " + item?.last_name}</p>
-                          </div>
-                        </td>
-                        <td>{item?.created_at || "N/A"}</td>
-                        <td>{item?.user_code || "N/A"}</td>
-                        <td>{item?.email_id}</td>
-                        <td>
-                          <div className="status-box d-flex gap-4 align-items-center">
-                            Active
-                            <div class="checkbox-wrapper-2 d-flex">
-                              <input
-                                // checked={item?.status == 1 ? true : false}
-                                type="checkbox"
-                                class="sc-gJwTLC ikxBAC position-relative m-0"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="action d-flex gap-3 align-items-center">
-                            <button className="edit-btn border-0 bg-transparent p-2 rounded-2">
-                              <img src="/images/svg/edit.svg" alt="edit" />
-                            </button>
-                            <button className="view-btn border-0 bg-transparent p-2 rounded-2">
-                              <img src="/images/svg/view.svg" alt="view" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  );
-                })}
-
+                  <tbody>
+                    {instructorData?.length != 0 &&
+                      instructorData?.map((item) => {
+                        return (
+                          <tr key={item?.teacher_id}>
+                            <td>
+                              <div className="title-box d-flex align-items-center gap-2">
+                                <img
+                                  style={{ height: "50px", width: "50px" }}
+                                  src={
+                                    item?.teacher_img
+                                      ? url?.BASE_URL + item?.teacher_img
+                                      : "/images/table-title-img.png"
+                                  }
+                                  alt="table-title-img"
+                                />
+                                <p>
+                                  {item?.first_name + " " + item?.last_name}
+                                </p>
+                              </div>
+                            </td>
+                            <td>{item?.created_at || "N/A"}</td>
+                            <td>{item?.user_code || "N/A"}</td>
+                            <td>{item?.email_id}</td>
+                            <td>
+                              <div className="status-box d-flex gap-4 align-items-center">
+                                Active
+                                <div class="checkbox-wrapper-2 d-flex">
+                                  <input
+                                    // checked={item?.status == 1 ? true : false}
+                                    type="checkbox"
+                                    class="sc-gJwTLC ikxBAC position-relative m-0"
+                                  />
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="action d-flex gap-3 align-items-center">
+                                <button className="edit-btn border-0 bg-transparent p-2 rounded-2">
+                                  <img src="/images/svg/edit.svg" alt="edit" />
+                                </button>
+                                <button className="view-btn border-0 bg-transparent p-2 rounded-2">
+                                  <img src="/images/svg/view.svg" alt="view" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
               </table>
             </div>
           </div>
@@ -197,7 +180,6 @@ export default function Instructors() {
                       width={25}
                       src="/images/close-icon.png"
                       alt="close-icon"
-
                     />
                   </button>
                 </div>
@@ -213,7 +195,9 @@ export default function Instructors() {
                       className="w-100 py-2 ps-4 rounded-pill transition "
                     />
                     {formik.touched.firstName && formik.errors.firstName && (
-                      <span className="text-danger fs-6">{formik.errors.firstName}</span>
+                      <span className="text-danger fs-6">
+                        {formik.errors.firstName}
+                      </span>
                     )}
                   </div>
                   <div className="input-box mb-4">
@@ -227,7 +211,9 @@ export default function Instructors() {
                       className="w-100 py-2 ps-4 rounded-pill transition"
                     />
                     {formik.touched.lastName && formik.errors.lastName && (
-                      <span className="text-danger fs-6">{formik.errors.lastName}</span>
+                      <span className="text-danger fs-6">
+                        {formik.errors.lastName}
+                      </span>
                     )}
                   </div>
                   <div className="input-box mb-4">
@@ -241,20 +227,9 @@ export default function Instructors() {
                       className="w-100 py-2 ps-4 rounded-pill transition"
                     />
                     {formik.touched.email && formik.errors.email && (
-                      <span className="text-danger fs-6">{formik.errors.email}</span>
-                    )}
-                  </div>
-                  <div className="input-box mb-4">
-                    <input
-                      name="userCode"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.userCode}
-                      placeholder="User Code"
-                      className="w-100 py-2 ps-4 rounded-pill transition"
-                    />
-                    {formik.touched.userCode && formik.errors.userCode && (
-                      <span className="text-danger fs-6">{formik.errors.userCode}</span>
+                      <span className="text-danger fs-6">
+                        {formik.errors.email}
+                      </span>
                     )}
                   </div>
                   <div className="input-box mb-4 position-relative">
@@ -307,9 +282,10 @@ export default function Instructors() {
                       )}
                     </button>
                     {formik.touched.password && formik.errors.password && (
-                      <span className="text-danger fs-6">{formik.errors.password}</span>
+                      <span className="text-danger fs-6">
+                        {formik.errors.password}
+                      </span>
                     )}
-
                   </div>
                   <div className="input-box mb-4 position-relative">
                     <input
@@ -360,12 +336,18 @@ export default function Instructors() {
                         </span>
                       )}
                     </button>
-                    {formik.touched.confirmPass && formik.errors.confirmPass && (
-                      <span className="text-danger fs-6">{formik.errors.confirmPass}</span>
-                    )}
+                    {formik.touched.confirmPass &&
+                      formik.errors.confirmPass && (
+                        <span className="text-danger fs-6">
+                          {formik.errors.confirmPass}
+                        </span>
+                      )}
                   </div>
                   <button
-                    disabled={formik.isSubmitting} type="submit" className="add-btn border-0 w-100 rounded-pill py-2 white-text fw-600">
+                    disabled={formik.isSubmitting}
+                    type="submit"
+                    className="add-btn border-0 w-100 rounded-pill py-2 white-text fw-600"
+                  >
                     Add
                   </button>
                 </form>

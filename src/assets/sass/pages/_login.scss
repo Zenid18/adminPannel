@@ -26,6 +26,35 @@
           }
         }
       }
+       .input-box {
+        input {
+          border: 1px solid transparent;
+          background: var(--l-grey);
+
+          font-size: var(--fs-15);
+
+          &::placeholder {
+            color: var(--grey);
+          }
+
+          &:focus {
+            border: 1px solid var(--red) !important;
+            background-color: var(--l-pink);
+
+            &::placeholder {
+              color: var(--black);
+
+            }
+          }
+        }
+
+        .pass-btn {
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 40px;
+        }
+      }
 
       .login-btn {
         background: var(--red-linear);

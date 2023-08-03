@@ -11,6 +11,8 @@
         }
     }
       .instructors-table{
+      .table-responsive{  
+        max-height: 400px;
     table{
       tr, th, td{
         white-space: nowrap;
@@ -30,6 +32,7 @@
         }
     }
   }
+}
   }
 }
 .add-instructors-modal{
@@ -66,7 +69,7 @@
                 position: absolute;
     top: 0;
     right: 0;
-    height: 100%;
+    height: 40px;
             }
         }
         .add-btn{

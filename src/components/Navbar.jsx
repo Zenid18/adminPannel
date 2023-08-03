@@ -42,10 +42,10 @@ export default function Navbar(props) {
           >
             <div className="right-navbar-items d-flex align-itemns-center justify-content-end gap-4">
               <button className="border-0 bg-transparent">
-                <img src="/images/message-icon.png" alt="message-icon" />
+                <img src="/images/svg/message-icon.svg" alt="message-icon" />
               </button>
               <button className="border-0 bg-transparent">
-                <img src="/images/bell-icon.png" alt="bell-icon" />
+                <img src="/images/svg/bell-icon.svg" alt="bell-icon" />
               </button>
               <div className="profile-box d-flex gap-3 align-items-center justify-content-center">
                 <p className="fw-500">Liza Daniel</p>
