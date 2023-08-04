@@ -1,29 +1,36 @@
 import * as Url from "./urls";
 import axios from "axios";
 export const post = async (url, token, body, hide = false) => {
-  const headers = token
-    ? {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    }
-    : {
+  var headers;
+  if (token == "" || token == null || token == undefined) {
+    headers = {
       "Content-Type": "application/json",
     };
-
+  } else {
+    headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    };
+  }
   const completeUrl = Url.BASE_URL + url;
-  const data = JSON.stringify(body);
-
+  let data = JSON.stringify(body);
+  console.log("completeUrl", completeUrl, body, headers);
   try {
     const response = await axios.post(completeUrl, data, { headers });
-    if (response.data.statusCode === 401) {
+    if (response.data.status === 401) {
       window.location.replace("/");
     }
     return response.data;
   } catch (error) {
-    // console.log(error);
-    return error;
+    console.log(error);
+    if (error.response) {
+      return { message: error.response.data.message };
+    } else {
+      return { message: "An error occurred." };
+    }
   }
 };
+
 export const get = async (url, token, hide = false) => {
   try {
     var headers;
@@ -50,6 +57,10 @@ export const get = async (url, token, hide = false) => {
     return response.data;
   } catch (error) {
     console.log(error);
-    return error;
+    if (error.response) {
+      return { message: error.response.data.message };
+    } else {
+      return { message: "An error occurred." };
+    }
   }
 };

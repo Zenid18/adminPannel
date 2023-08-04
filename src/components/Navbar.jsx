@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getData, storageKey } from "../constants/storage";
-
-
+import * as url from '../constants/urls'
 export default function Navbar(props) {
   const navigate = useNavigate()
+  const [image, setImage] = useState("")
+  const [name, setName] = useState("")
+  useEffect(() => {
+    const getUser = async () => {
+      const data = await getData(storageKey?.USER_DATA)
+      const data1 = JSON?.parse(data)
+      if (data1) {
+        setImage(data1?.user_img)
+        setName(data1?.first_name + " " + data1?.last_name)
+      }
+    };
+    getUser();
+  }, []);
   const handleLogout = () => {
     localStorage.removeItem(storageKey?.AUTH_TOKEN);
-    navigate('/')
-
+    localStorage.removeItem(storageKey?.USER_DATA);
+    navigate("/", { replace: true });
   }
   return (
     <header className="header px-4 py-3 position-fixed transition">
@@ -48,7 +60,7 @@ export default function Navbar(props) {
                 <img src="/images/svg/bell-icon.svg" alt="bell-icon" />
               </button>
               <div className="profile-box d-flex gap-3 align-items-center justify-content-center">
-                <p className="fw-500">Liza Daniel</p>
+                <p className="fw-500">{name ? name : "Liza Daniel"}</p>
                 <div className="profile-logo d-none d-lg-block">
                   <div class="dropdown">
                     <button
@@ -58,8 +70,8 @@ export default function Navbar(props) {
                       aria-expanded="false"
                     >
                       <img
-                        src="/images/profile-logo.png"
-                        className="cursor-pointer"
+                        src={image ? url?.BASE_URL + image : "/images/profile-logo.png"}
+                        className="profile-img"
                         alt="profile-logo"
                       />
                     </button>
