@@ -34,7 +34,7 @@ export default function Navbar(props) {
           >
             <img src="/images/svg/toggle.svg" alt="toggle" />
           </button>
-          <h2 className="fw-600 d-none d-lg-block">Dashboard</h2>
+          <h2 className="fw-600 d-none d-lg-block">Dashboard </h2>
           <Link className="d-block d-lg-none">
             {" "}
             <img width={100} src="images/logo.png" alt="logo" />
