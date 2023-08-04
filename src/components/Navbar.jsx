@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getData, storageKey } from "../constants/storage";
 import * as url from '../constants/urls'
+import { toast } from "react-toastify";
 export default function Navbar(props) {
   const navigate = useNavigate()
   const [image, setImage] = useState("")
@@ -18,6 +19,7 @@ export default function Navbar(props) {
     getUser();
   }, []);
   const handleLogout = () => {
+    toast.success("Logout successfully")
     localStorage.removeItem(storageKey?.AUTH_TOKEN);
     localStorage.removeItem(storageKey?.USER_DATA);
     navigate("/", { replace: true });
