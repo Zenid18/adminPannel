@@ -1,7 +1,4 @@
 import { ADMIN_LOGIN_ERROR, ADMIN_LOGIN_LOADING, ADMIN_LOGIN_SUCCESS } from "../constants/AuthActionType";
-
- 
-
 const initialState = {
   isLoading: false,
 };

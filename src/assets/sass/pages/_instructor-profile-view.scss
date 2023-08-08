@@ -1,0 +1,80 @@
+.instructor-profile-view-main-page {
+    .instructor-profile-view {
+        .instructor-heading-box {
+            background: var(--white);
+            font-size: var(--fs-18);
+        }
+    }
+
+    .profile-box {
+        background: var(--white);
+
+        .profile-heading-box {
+            .profile-heading {
+                font-size: var(--fs-18);
+            }
+
+            .active-since {
+                font-size: var(--fs-12);
+                color: var(--d-grey);
+
+                span {
+                    background-color: var(--l-green);
+                    color: var(--green);
+                }
+            }
+
+            .change-password {
+                button {
+                    font-size: var(--fs-14);
+
+                    &:nth-child(1) {
+                        color: var(--green);
+                    }
+
+                    &:nth-child(2) {
+                        box-shadow: 0px 4px 15px 0px rgba(178, 212, 226, 0.64);
+
+                    }
+
+                    &:nth-child(3) {
+                        box-shadow: 0px 4px 15px 0px rgba(178, 212, 226, 0.64);
+
+                    }
+                }
+            }
+        }
+
+        .profile-data {
+            .profile-name-box {
+                p {
+                    display: flex;
+                    font-size: var(--fs-14);
+                    color: var(--d-grey);
+
+                    span {
+                        width: 85px;
+                        color: var(--d-blue);
+                    }
+                }
+            }
+        }
+
+        .profile-bottom-data {
+            p {
+                display: flex;
+
+                font-size: var(--fs-14);
+                color: var(--d-grey);
+
+                span {
+                    &:nth-child(1) {
+                        min-width: 85px;
+                        color: var(--d-blue);
+                    }
+                }
+            }
+        }
+
+    }
+}

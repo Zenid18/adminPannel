@@ -1,7 +1,4 @@
 import { OPERATE_TEACHER_ERROR, OPERATE_TEACHER_LOADING, OPERATE_TEACHER_SUCCESS } from "../../constants/otherActionTypes/Teacher";
-
- 
-
 const initialState = {
   isLoading: false,
 };

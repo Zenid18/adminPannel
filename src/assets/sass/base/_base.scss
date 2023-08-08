@@ -38,7 +38,9 @@ section {
   --l-pink: #fff3f9;
   --green: #008E17;
   --l-green: #edffef;
-  --red-linear: linear-gradient(90deg, #f55454, #f24f4a, #ee4a40, #ea4636, #e5422b);
+  --d-green: #008C45;
+  --d-pink: #FF426F;
+  --d-blue: #505050 --red-linear: linear-gradient(90deg, #f55454, #f24f4a, #ee4a40, #ea4636, #e5422b);
 
   //FONTS VAR
   --fs-8: 0.5rem;
@@ -217,6 +219,11 @@ select:focus-visible {
   transition: opacity 0.3s;
   top: -40px;
 }
+
+.loader-page {
+  z-index: 11000000 !important;
+}
+
 .tooltip2 .tooltiptext::after {
   content: "";
   position: absolute;

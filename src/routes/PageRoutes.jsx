@@ -3,6 +3,7 @@ import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import Instructors from "../pages/Instructors";
 import InstructorProfile from "../pages/InstructorProfile";
+import InstructorProfileView from "../pages/InstructorProfileView";
 
 export default function PageRoutes() {
   const routes = [
@@ -21,6 +22,10 @@ export default function PageRoutes() {
     {
       path: "/instructors-profile",
       Component: InstructorProfile,
+    },
+    {
+      path: "/instructors-profile-view",
+      Component: InstructorProfileView,
     },
   ];
 

@@ -64,3 +64,35 @@ export const get = async (url, token, hide = false) => {
     }
   }
 };
+export const uploadImageApi = async (url, token, formData, hide = false) => {
+  console.log(formData, token, url, "image upload=======");
+
+  const headers = {
+    Accept: "application/json",
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  const completeUrl = Url.BASE_URL + url;
+  console.log("completeUrl", completeUrl);
+
+  try {
+    const res = await axios.post(completeUrl, formData, { headers });
+    console.log("check the response", res);
+
+    if (res.status === 401) {
+      window.location.replace("/");
+    }
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    if (error.response) {
+      return { message: error.response.data.message };
+    } else {
+      return { message: "An error occurred." };
+    }
+  }
+}

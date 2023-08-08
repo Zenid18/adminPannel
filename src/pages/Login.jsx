@@ -11,7 +11,6 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation()
   const [showPass, setShowPass] = useState(false);
-  const isLoading = useSelector((state) => state.authReducer.isLoading);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -145,13 +144,8 @@ export default function Login() {
               type="submit"
               className="login-btn white-text fw-600 w-100  rounded-pill mt-4 border-0"
             >
-              {isLoading ? (
-                <div class="spinner-border" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-              ) : (
-                "Login"
-              )}
+              Login
+
             </button>
             <div className="forgot-pass text-end">
               <a href="" className=" text-decoration-none">

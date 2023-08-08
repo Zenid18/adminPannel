@@ -4,6 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getData, storageKey } from "./constants/storage";
 import { useNavigate } from "react-router-dom";
+import Loader from "./components/loader";
+import AppRoutes from "./routes/PageRoutes";
 
 function App() {
   const navigate = useNavigate()
@@ -35,7 +37,8 @@ function App() {
         pauseOnHover
         theme="dark"
       />
-      <Routes />
+      <Loader />
+      <AppRoutes />
     </div>
   );
 }

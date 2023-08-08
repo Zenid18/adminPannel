@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../layout/layout";
-import { addTeacher, getAllTeachers } from "../redux/services/otherServices/Teacher";
+import { addTeacher, getAllTeachers, handleTeacherStatus } from "../redux/services/otherServices/Teacher";
 import { useDispatch } from "react-redux";
 import * as url from '../constants/urls'
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { useFormik } from "formik"
+import { useNavigate } from "react-router-dom";
 
 export default function Instructors() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [sidebarActive, setSidebarActive] = useState("instructors");
   const [showPassInstructors, setShowPassInstructors] = useState(false);
   const [showConPassInstructors, setShowConPassInstructors] = useState(false);
@@ -69,6 +71,39 @@ export default function Instructors() {
     }
   });
 
+  const handleEdit = (id) => {
+    navigate('/instructors-profile', { state: id })
+  }
+  const handleStatus = async (id) => {
+    const body = {
+      teacher_id: id
+    }
+    const res = await dispatch(handleTeacherStatus(body))
+    if (res?.status == 200) {
+      const updatedData = instructorData.map((x) => {
+        if (x.teacher_id === id) {
+          return {
+            ...x,
+            status: !x.status
+          };
+        }
+        return x;
+      });
+      setInstructorData(updatedData);
+      toast.success(res?.message)
+    } else {
+      toast.error(res?.message)
+
+
+    }
+
+  }
+
+  const handleView = async (id) => {
+    navigate('/instructors-profile-view', { state: id })
+
+  }
+
   return (
     <div>
       <Layout sidebarActive={sidebarActive} setSidebarActive={setSidebarActive}>
@@ -104,56 +139,57 @@ export default function Instructors() {
                     <th>Action</th>
                   </tr>
                 </thead>
-                  <tbody>
-                    {instructorData?.length != 0 &&
-                      instructorData?.map((item) => {
-                        return (
-                          <tr key={item?.teacher_id}>
-                            <td>
-                              <div className="title-box d-flex align-items-center gap-2">
-                                <img
-                                  style={{ height: "50px", width: "50px" }}
-                                  src={
-                                    item?.teacher_img
-                                      ? url?.BASE_URL + item?.teacher_img
-                                      : "/images/table-title-img.png"
-                                  }
-                                  alt="table-title-img"
+                <tbody>
+                  {instructorData?.length != 0 &&
+                    instructorData?.map((item) => {
+                      return (
+                        <tr key={item?.teacher_id}>
+                          <td>
+                            <div className="title-box d-flex align-items-center gap-2">
+                              <img
+                                style={{ height: "50px", width: "50px" }}
+                                src={
+                                  item?.teacher_img
+                                    ? url?.BASE_URL + item?.teacher_img
+                                    : "/images/table-title-img.png"
+                                }
+                                alt="table-title-img"
+                              />
+                              <p>
+                                {item?.first_name + " " + item?.last_name}
+                              </p>
+                            </div>
+                          </td>
+                          <td>{item?.created_at || "N/A"}</td>
+                          <td>{item?.user_code || "N/A"}</td>
+                          <td>{item?.email_id}</td>
+                          <td>
+                            <div className="status-box d-flex gap-4 align-items-center">
+                              Active
+                              <div class="checkbox-wrapper-2 d-flex">
+                                <input
+                                  onChange={() => { handleStatus(item?.teacher_id) }}
+                                  checked={item?.status}
+                                  type="checkbox"
+                                  class="sc-gJwTLC ikxBAC position-relative m-0"
                                 />
-                                <p>
-                                  {item?.first_name + " " + item?.last_name}
-                                </p>
                               </div>
-                            </td>
-                            <td>{item?.created_at || "N/A"}</td>
-                            <td>{item?.user_code || "N/A"}</td>
-                            <td>{item?.email_id}</td>
-                            <td>
-                              <div className="status-box d-flex gap-4 align-items-center">
-                                Active
-                                <div class="checkbox-wrapper-2 d-flex">
-                                  <input
-                                    // checked={item?.status == 1 ? true : false}
-                                    type="checkbox"
-                                    class="sc-gJwTLC ikxBAC position-relative m-0"
-                                  />
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="action d-flex gap-3 align-items-center">
-                                <button className="edit-btn border-0 bg-transparent p-2 rounded-2">
-                                  <img src="/images/svg/edit.svg" alt="edit" />
-                                </button>
-                                <button className="view-btn border-0 bg-transparent p-2 rounded-2">
-                                  <img src="/images/svg/view.svg" alt="view" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="action d-flex gap-3 align-items-center">
+                              <button onClick={() => { handleEdit(item?.teacher_id) }} className="edit-btn border-0 bg-transparent p-2 rounded-2">
+                                <img src="/images/svg/edit.svg" alt="edit" />
+                              </button>
+                              <button onClick={() => handleView(item?.teacher_id)} className="view-btn border-0 bg-transparent p-2 rounded-2">
+                                <img src="/images/svg/view.svg" alt="view" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
               </table>
             </div>
           </div>

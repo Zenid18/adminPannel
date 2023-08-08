@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import Layout from "../layout/layout";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, } from "react-redux";
 import { useFormik } from "formik";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 import * as Yup from 'yup'
 import * as url from '../constants/urls'
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import { editTeacher, getOneTeacher } from "../redux/services/otherServices/Teacher";
+import Loader from "../components/loader";
 
 export default function InstructorProfile() {
+  const isLoading = useSelector((state) => state.authReducer.isLoading);
+  const location = useLocation();
+  const data = location.state;
   const dispatch = useDispatch();
-  const [sidebarActive, setSidebarActive] = useState("my-account");
-  const [showPassInstructors, setShowPassInstructors] = useState(false);
-  const [showConPassInstructors, setShowConPassInstructors] = useState(false);
+  const [sidebarActive, setSidebarActive] = useState("instructors");
   const [profileData, setProfileData] = useState([]);
   const [phoneNo, setPhoneNo] = useState("");
   const [dialCode, setDialCode] = useState("");
@@ -23,7 +27,10 @@ export default function InstructorProfile() {
     getInstructorProfile();
   }, []);
   const getInstructorProfile = async () => {
-    const res = await dispatch(TeacherProfile());
+    const body = {
+      teacher_id: data
+    }
+    const res = await dispatch(getOneTeacher(body));
     if (res?.status == 200 || res?.success) {
       setProfileData(res?.data);
       setDialCode(res?.data?.dailcode || "");
@@ -49,18 +56,20 @@ export default function InstructorProfile() {
       pincode: profileData?.pincode || "",
       info: profileData?.about || "",
       experi: profileData?.lang || "",
+      state: profileData?.state || ""
       // phone: "",
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required("First Name is required"),
       lastName: Yup.string().required("Last Name is required"),
       email: Yup.string().email().required("Email is required"),
-      usercode: Yup.string().required("User Code is required"),
+      usercode: Yup.string(),
       address: Yup.string().required("Address is required"),
       city: Yup.string().required("city is required"),
       country: Yup.string().required("Country is required"),
       pincode: Yup.string().required("Pincode is required"),
       experi: Yup.string().required("Languages are required"),
+      state: Yup.string().required("State is required"),
       // phone: Yup.number()
       //   .typeError("Must be a valid number")
       //   .positive("Must be a valid number")
@@ -71,25 +80,35 @@ export default function InstructorProfile() {
       info: Yup.string(),
     }),
     onSubmit: async () => {
-      const formData = new FormData();
-      formData?.append("first_name", formik?.values?.firstName);
-      formData?.append("last_name", formik?.values?.lastName);
-      formData?.append("email_id", formik?.values?.email);
-      formData?.append("user_code", formik?.values?.usercode);
-      formData?.append("phone", phoneNo);
-      formData?.append("dailcode", dialCode);
-      formData?.append("lang", formik?.values?.experi);
-      formData?.append("pincode", formik?.values?.pincode);
-      formData?.append("address", formik?.values?.address);
-      formData?.append("city", formik?.values?.city);
-      formData?.append("country", formik?.values?.country);
-      formData?.append("about", formik?.values?.info);
-      formData?.append("teacher_img", imageUri);
-      const res = await dispatch(updateTeacherProfile(formData));
-      if (res?.status == 200 || res?.success == true) {
-        toast.success(res?.message);
-        getInstructorProfile();
+      if (!phoneNo && !dialCode) {
+        toast.error("Phone number is required")
+      } else {
+        const formData = new FormData();
+        formData?.append("teacher_id", data)
+        formData?.append("first_name", formik?.values?.firstName);
+        formData?.append("last_name", formik?.values?.lastName);
+        formData?.append("email_id", formik?.values?.email);
+        formData?.append("user_code", formik?.values?.usercode);
+        formData?.append("phone", phoneNo);
+        formData?.append("dailcode", dialCode);
+        formData?.append("lang", formik?.values?.experi);
+        formData?.append("pincode", formik?.values?.pincode);
+        formData?.append("address", formik?.values?.address);
+        formData?.append("city", formik?.values?.city);
+        formData?.append("country", formik?.values?.country);
+        formData?.append("about", formik?.values?.info);
+        formData?.append("state", formik?.values?.state);
+        formData?.append("teacher_img", imageUri);
+        const res = await dispatch(editTeacher(formData));
+        if (res?.status == 200 || res?.success == true) {
+          toast.success(res?.message);
+        }
+        else {
+          toast.error(res?.message);
+        }
       }
+
+
     },
   });
   const handleChangePhone = (phone, country) => {
@@ -109,6 +128,7 @@ export default function InstructorProfile() {
   };
   return (
     <div>
+
       <Layout sidebarActive={sidebarActive} setSidebarActive={setSidebarActive}>
         <form onSubmit={formik?.handleSubmit}>
           <div className="my-account p-4 rounded-2">
@@ -122,14 +142,12 @@ export default function InstructorProfile() {
                         First Name
                       </label>
                       <input
-                        disabled
                         id="firstName"
                         placeholder="First Name"
-                        className={`ps-2 rounded-1 p-2 ${
-                          formik.touched.firstName && formik.errors.firstName
-                            ? "border-danger"
-                            : ""
-                        }`}
+                        className={`ps-2 rounded-1 p-2 ${formik.touched.firstName && formik.errors.firstName
+                          ? "border-danger"
+                          : ""
+                          }`}
                         type="text"
                         onChange={formik?.handleChange}
                         onBlur={formik?.onBlur}
@@ -147,15 +165,13 @@ export default function InstructorProfile() {
                       <label className="pb-1" htmlFor="lastName">
                         Last Name
                       </label>
-                      <input
-                        disabled
+                      <input ed
                         id="lastName"
                         placeholder="Last Name"
-                        className={`ps-2 rounded-1 p-2 ${
-                          formik.touched.lastName && formik.errors.lastName
-                            ? "border-danger"
-                            : ""
-                        }`}
+                        className={`ps-2 rounded-1 p-2 ${formik.touched.lastName && formik.errors.lastName
+                          ? "border-danger"
+                          : ""
+                          }`}
                         type="text"
                         onChange={formik?.handleChange}
                         onBlur={formik?.onBlur}
@@ -177,11 +193,10 @@ export default function InstructorProfile() {
                         disabled
                         id="email"
                         placeholder="Email ID"
-                        className={`ps-2 rounded-1 p-2 ${
-                          formik.touched.email && formik.errors.email
-                            ? "border-danger"
-                            : ""
-                        }`}
+                        className={`ps-2 rounded-1 p-2 ${formik.touched.email && formik.errors.email
+                          ? "border-danger"
+                          : ""
+                          }`}
                         type="email"
                         onChange={formik?.handleChange}
                         onBlur={formik?.onBlur}
@@ -223,11 +238,10 @@ export default function InstructorProfile() {
                       <input
                         id="experi"
                         placeholder="Language"
-                        className={`ps-2 rounded-1 p-2 ${
-                          formik.touched.experi && formik.errors.experi
-                            ? "border-danger"
-                            : ""
-                        }`}
+                        className={`ps-2 rounded-1 p-2 ${formik.touched.experi && formik.errors.experi
+                          ? "border-danger"
+                          : ""
+                          }`}
                         type="text"
                         onChange={formik?.handleChange}
                         onBlur={formik?.onBlur}
@@ -249,11 +263,10 @@ export default function InstructorProfile() {
                         disabled
                         id="usercode"
                         placeholder="usercode"
-                        className={`ps-2 rounded-1 p-2 ${
-                          formik.touched.usercode && formik.errors.usercode
-                            ? "border-danger"
-                            : ""
-                        }`}
+                        className={`ps-2 rounded-1 p-2 ${formik.touched.usercode && formik.errors.usercode
+                          ? "border-danger"
+                          : ""
+                          }`}
                         type="text"
                         onChange={formik?.handleChange}
                         onBlur={formik?.onBlur}
@@ -274,14 +287,16 @@ export default function InstructorProfile() {
                     Profile Update
                     <div class="tooltip2 ms-1">
                       <img src="/images/svg/info-icon.svg" alt="info" />
-                      <span class="tooltiptext">Upload image upto 2 mb</span>
+                      <span class="tooltiptext">Upload image up to 2 mb
+                        and Size(303 x 266)</span>
                     </div>
                   </p>
-                  <div className="profile-img">
+                  <div className={`profile-img ${image ? "border p-4" : ""}`}>
                     <img
-                      src={image ? image : "/images/svg/profile.svg"}
+                      src={image ? image : "/images/profile.png"}
                       className="img-fluid rounded-1 w-100"
                       alt="profile-img"
+                      style={image ? { height: "179px" } : { height: "227px" }}
                     />
                   </div>
                   <label
@@ -304,7 +319,7 @@ export default function InstructorProfile() {
             </div>
             <h2 className="fw-600 pb-4">Other Information</h2>
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <div className="form-box d-flex flex-column pb-4">
                   <label className="pb-1" htmlFor="pincode">
                     Pin code / Zip code
@@ -312,11 +327,10 @@ export default function InstructorProfile() {
                   <input
                     id="pincode"
                     placeholder="Pin code / Zip code"
-                    className={`ps-2 rounded-1 p-2 ${
-                      formik.touched.pincode && formik.errors.pincode
-                        ? "border-danger"
-                        : ""
-                    }`}
+                    className={`ps-2 rounded-1 p-2 ${formik.touched.pincode && formik.errors.pincode
+                      ? "border-danger"
+                      : ""
+                      }`}
                     onChange={formik?.handleChange}
                     onBlur={formik?.onBlur}
                     value={formik?.values?.pincode}
@@ -330,7 +344,7 @@ export default function InstructorProfile() {
                 </div>
               </div>
 
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <div className="form-box d-flex flex-column pb-4">
                   <label className="pb-1" htmlFor="address">
                     Address
@@ -338,11 +352,10 @@ export default function InstructorProfile() {
                   <input
                     id="address"
                     placeholder="Address"
-                    className={`ps-2 rounded-1 p-2 ${
-                      formik.touched.address && formik.errors.address
-                        ? "border-danger"
-                        : ""
-                    }`}
+                    className={`ps-2 rounded-1 p-2 ${formik.touched.address && formik.errors.address
+                      ? "border-danger"
+                      : ""
+                      }`}
                     type="text"
                     onChange={formik?.handleChange}
                     onBlur={formik?.onBlur}
@@ -355,32 +368,8 @@ export default function InstructorProfile() {
                   )}
                 </div>
               </div>
-              <div className="col-md-6">
-                <div className="form-box d-flex flex-column pb-4">
-                  <label className="pb-1" htmlFor="city">
-                    City
-                  </label>
-                  <input
-                    id="city"
-                    placeholder="City"
-                    className={`ps-2 rounded-1 p-2 ${
-                      formik.touched.city && formik.errors.city
-                        ? "border-danger"
-                        : ""
-                    }`}
-                    onChange={formik?.handleChange}
-                    onBlur={formik?.onBlur}
-                    value={formik?.values?.city}
-                    type="text"
-                  />
-                  {formik.touched.city && formik.errors.city && (
-                    <span className="text-danger fs-6">
-                      {formik.errors.city}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="col-md-6">
+              <div className="col-md-4"></div>
+              <div className="col-md-4">
                 <div className="form-box d-flex flex-column pb-4">
                   <label className="pb-1" htmlFor="country">
                     Country
@@ -388,11 +377,10 @@ export default function InstructorProfile() {
                   <input
                     id="country"
                     placeholder="Country"
-                    className={`ps-2 rounded-1 p-2 ${
-                      formik.touched.country && formik.errors.country
-                        ? "border-danger"
-                        : ""
-                    }`}
+                    className={`ps-2 rounded-1 p-2 ${formik.touched.country && formik.errors.country
+                      ? "border-danger"
+                      : ""
+                      }`}
                     onChange={formik?.handleChange}
                     onBlur={formik?.onBlur}
                     value={formik?.values?.country}
@@ -405,13 +393,63 @@ export default function InstructorProfile() {
                   )}
                 </div>
               </div>
+              <div className="col-md-4">
+                <div className="form-box d-flex flex-column pb-4">
+                  <label className="pb-1" htmlFor="state">
+                    State
+                  </label>
+                  <input
+                    id="state"
+                    placeholder="State"
+                    className={`ps-2 rounded-1 p-2 ${formik.touched.state && formik.errors.state
+                      ? "border-danger"
+                      : ""
+                      }`}
+                    onChange={formik?.handleChange}
+                    onBlur={formik?.onBlur}
+                    value={formik?.values?.state}
+                    type="text"
+                  />
+                  {formik.touched.state && formik.errors.state && (
+                    <span className="text-danger fs-6">
+                      {formik.errors.state}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="col-md-4"></div>
+              <div className="col-md-4">
+                <div className="form-box d-flex flex-column pb-4">
+                  <label className="pb-1" htmlFor="city">
+                    City
+                  </label>
+                  <input
+                    id="city"
+                    placeholder="City"
+                    className={`ps-2 rounded-1 p-2 ${formik.touched.city && formik.errors.city
+                      ? "border-danger"
+                      : ""
+                      }`}
+                    onChange={formik?.handleChange}
+                    onBlur={formik?.onBlur}
+                    value={formik?.values?.city}
+                    type="text"
+                  />
+                  {formik.touched.city && formik.errors.city && (
+                    <span className="text-danger fs-6">
+                      {formik.errors.city}
+                    </span>
+                  )}
+                </div>
+              </div>
+
               <div className="col-md-12">
                 <div className="form-box d-flex flex-column pb-4">
                   <label className="pb-3" htmlFor="info">
                     About Info{" "}
                     <div class="tooltip1 ms-1">
                       <img src="/images/svg/info-icon.svg" alt="info" />
-                      <span class="tooltiptext">Minimum words 200</span>
+                      <span class="tooltiptext">Maximum 400 characters</span>
                     </div>
                   </label>
 
