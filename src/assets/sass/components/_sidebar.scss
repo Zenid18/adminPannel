@@ -30,15 +30,14 @@
          }
         }
         .sidebar-active{
-           background: var(--red);
                     a{
-            color: var(--white);
+            color: var(--red);
             .sidebar-item-icon{
-                background: unset;
+                background: var(--l-pink);
                 width: 40px;
                 height: 38px;
                 svg{
-                    fill: var(--white);
+                    fill: var(--red);
                 }
             }
          }

@@ -25,7 +25,7 @@ export default function Navbar(props) {
     navigate("/", { replace: true });
   }
   return (
-    <header className="header px-4 py-3 position-fixed transition">
+    <header className="header px-4 py-1 position-fixed transition">
       <nav className="navbar nav-bar-main navbar-expand-lg rounded-2 ">
         <div className="container-fluid">
           <button
@@ -72,7 +72,11 @@ export default function Navbar(props) {
                       aria-expanded="false"
                     >
                       <img
-                        src={image ? url?.BASE_URL + image : "/images/profile-logo.png"}
+                        src={
+                          image
+                            ? url?.BASE_URL + image
+                            : "/images/profile-logo.png"
+                        }
                         className="profile-img"
                         alt="profile-logo"
                       />
@@ -84,7 +88,10 @@ export default function Navbar(props) {
                         </Link>
                       </li>
                       <li>
-                        <span onClick={() => handleLogout()} class="dropdown-item">
+                        <span
+                          onClick={() => handleLogout()}
+                          class="dropdown-item"
+                        >
                           Log Out
                         </span>
                       </li>
