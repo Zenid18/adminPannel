@@ -83,7 +83,7 @@ export default function Navbar(props) {
                     </button>
                     <ul class="dropdown-menu">
                       <li>
-                        <Link class="dropdown-item" to="/my-account">
+                        <Link class="dropdown-item">
                           Profile
                         </Link>
                       </li>

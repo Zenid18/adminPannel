@@ -147,11 +147,6 @@ export default function Login() {
               Login
 
             </button>
-            <div className="forgot-pass text-end">
-              <a href="" className=" text-decoration-none">
-                Forgot Password
-              </a>
-            </div>
           </form>
         </div>
       </div>
