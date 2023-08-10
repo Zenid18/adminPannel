@@ -83,7 +83,7 @@ export default function InstructorProfileView() {
               <div className="profile-heading-box mb-4 d-flex justify-content-between align-items-center flex-column gap-2 flex-sm-row gap-sm-0">
                 <div className="profile-heading fw-600">Personal Info</div>
                 <div className="active-since d-flex gap-2 align-items-center ">
-                  <span className="p-1 px-3 rounded-3 fw-500">{instructorData?.status == 1 ? "Active" : "Deactivate"}</span>
+                  <span className="p-1 px-3 rounded-3 fw-500">{instructorData?.status == 1 ? "Active" : "In-Active"}</span>
                   {instructorData?.last_seen || "N/A"}
                 </div>
                 <div className="change-password d-flex gap-3">
