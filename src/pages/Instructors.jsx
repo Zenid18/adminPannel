@@ -165,7 +165,7 @@ export default function Instructors() {
                           <td>{item?.email_id}</td>
                           <td>
                             <div className="status-box d-flex gap-4 align-items-center">
-                              Active
+                              {item?.status == 1 ? "Active" : "In-Active"}
                               <div class="checkbox-wrapper-2 d-flex">
                                 <input
                                   onChange={() => { handleStatus(item?.teacher_id) }}

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import * as url from '../constants/urls'
 
 export default function InstructorProfileView() {
+  const [sidebarActive, setSidebarActive] = useState("instructors");
   const dispatch = useDispatch()
   const location = useLocation();
   const data = location.state;
@@ -24,7 +25,7 @@ export default function InstructorProfileView() {
   }
   return (
     <div className="instructor-profile-view-main-page">
-      <Layout>
+      <Layout sidebarActive={sidebarActive} setSidebarActive={setSidebarActive}>
         <div className="instructor-profile-view">
           <div className="instructor-heading-box p-3 rounded-2 d-flex justify-content-between flex-column gap-2 flex-sm-row gap-sm-0">
             <div className="instructor-heading">
