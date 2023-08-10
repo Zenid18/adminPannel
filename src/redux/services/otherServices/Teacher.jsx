@@ -100,6 +100,22 @@ export const handleTeacherStatus = (body) => async (dispatch) => {
     return { message: error };
   }
 };
+export const TeacherChangePassword = (body) => async (dispatch) => {
+  const token = getData(storageKey.AUTH_TOKEN);
+  dispatch(operateTeacherLoading(true));
+  try {
+    const response = await Service.post(url.CHANGE_PASS, token, body);
+    if (response.success == true || response?.status == 200) {
+      dispatch(operateTeacherSuccess(false));
+      console.log(response, "CHANGE_ PASSWORD-----------");
+    }
+    return response;
+  } catch (error) {
+    // console.log(error, 'err-----------');
+    dispatch(operateTeacherError(false));
+    return { message: error };
+  }
+};
 
 
 

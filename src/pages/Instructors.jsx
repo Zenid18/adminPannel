@@ -160,12 +160,12 @@ export default function Instructors() {
                               </p>
                             </div>
                           </td>
-                          <td>{item?.created_at || "N/A"}</td>
+                          <td>{item?.last_seen || "N/A"}</td>
                           <td>{item?.user_code || "N/A"}</td>
                           <td>{item?.email_id}</td>
                           <td>
                             <div className="status-box d-flex gap-4 align-items-center">
-                              {item?.status == 1 ? "Active" : "In-Active"}
+                              {item?.status == 1 ? "Active" : "Deactivate"}
                               <div class="checkbox-wrapper-2 d-flex">
                                 <input
                                   onChange={() => { handleStatus(item?.teacher_id) }}
