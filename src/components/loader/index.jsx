@@ -7,13 +7,13 @@ const Loader = () => {
     return (
         <>
 
-            {isLoading || loading ?
+            {/* {isLoading || loading ?
                 <div className="loader-page fixed-top w-100 vh-100 d-flex justify-content-center align-items-center">
                     <div class="spinner-border text-danger" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
-                : ""}
+                : ""} */}
         </>
     );
 };

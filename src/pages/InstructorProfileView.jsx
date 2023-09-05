@@ -44,24 +44,26 @@ export default function InstructorProfileView() {
         .required('Confirm Password is required'),
     }),
     onSubmit: async () => {
+
       const body = {
         current_password: formik?.values?.oldPassword,
         new_password: formik?.values?.newPassword,
         confirm_password: formik?.values?.confirmPass,
         teacher_id: data,
       };
-      const res = await dispatch(TeacherChangePassword(body));
-      if (res?.status == 200 || res?.success == true) {
-        toast?.success(res?.message)
-        document.getElementById("closeAddModal").click()
-        formik.setFieldValue('oldPassword', '');
-        formik.setFieldValue('newPassword', '')
-        formik.setFieldValue('confirmPass', '')
+      document.getElementById("closeAddModal").click()
+      // const res = await dispatch(TeacherChangePassword(body));
+      // if (res?.status == 200 || res?.success == true) {
+      //   toast?.success(res?.message)
+      //   document.getElementById("closeAddModal").click()
+      //   formik.setFieldValue('oldPassword', '');
+      //   formik.setFieldValue('newPassword', '')
+      //   formik.setFieldValue('confirmPass', '')
 
-      }
-      else {
-        toast?.error(res?.message)
-      }
+      // }
+      // else {
+      //   toast?.error(res?.message)
+      // }
 
       formik.setSubmitting(false)
     }

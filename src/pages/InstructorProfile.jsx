@@ -80,33 +80,33 @@ export default function InstructorProfile() {
       info: Yup.string(),
     }),
     onSubmit: async () => {
-      if (!phoneNo && !dialCode) {
-        toast.error("Phone number is required")
-      } else {
-        const formData = new FormData();
-        formData?.append("teacher_id", data)
-        formData?.append("first_name", formik?.values?.firstName);
-        formData?.append("last_name", formik?.values?.lastName);
-        formData?.append("email_id", formik?.values?.email);
-        formData?.append("user_code", formik?.values?.usercode);
-        formData?.append("phone", phoneNo);
-        formData?.append("dailcode", dialCode);
-        formData?.append("lang", formik?.values?.experi);
-        formData?.append("pincode", formik?.values?.pincode);
-        formData?.append("address", formik?.values?.address);
-        formData?.append("city", formik?.values?.city);
-        formData?.append("country", formik?.values?.country);
-        formData?.append("about", formik?.values?.info);
-        formData?.append("state", formik?.values?.state);
-        formData?.append("teacher_img", imageUri);
-        const res = await dispatch(editTeacher(formData));
-        if (res?.status == 200 || res?.success == true) {
-          toast.success(res?.message);
-        }
-        else {
-          toast.error(res?.message);
-        }
-      }
+      //   if (!phoneNo && !dialCode) {
+      //     toast.error("Phone number is required")
+      //   } else {
+      //     const formData = new FormData();
+      //     formData?.append("teacher_id", data)
+      //     formData?.append("first_name", formik?.values?.firstName);
+      //     formData?.append("last_name", formik?.values?.lastName);
+      //     formData?.append("email_id", formik?.values?.email);
+      //     formData?.append("user_code", formik?.values?.usercode);
+      //     formData?.append("phone", phoneNo);
+      //     formData?.append("dailcode", dialCode);
+      //     formData?.append("lang", formik?.values?.experi);
+      //     formData?.append("pincode", formik?.values?.pincode);
+      //     formData?.append("address", formik?.values?.address);
+      //     formData?.append("city", formik?.values?.city);
+      //     formData?.append("country", formik?.values?.country);
+      //     formData?.append("about", formik?.values?.info);
+      //     formData?.append("state", formik?.values?.state);
+      //     formData?.append("teacher_img", imageUri);
+      //     const res = await dispatch(editTeacher(formData));
+      //     if (res?.status == 200 || res?.success == true) {
+      //       toast.success(res?.message);
+      //     }
+      //     else {
+      //       toast.error(res?.message);
+      //     }
+      //   }
 
 
     },

@@ -25,17 +25,18 @@ export default function Login() {
         .min(8, "Password must be at least 8 characters"),
     }),
     onSubmit: async () => {
+      navigate("/dashboard", { replace: true });
       const body = {
         email_id: formik?.values?.email,
         password: formik?.values?.password,
       };
-      const res = await dispatch(adminLogin(body));
-      if (res?.status == 200 || res?.success == true) {
-        toast.success(res?.message);
-        navigate("/dashboard", { replace: true });
-      } else {
-        toast.error(res?.message);
-      }
+      // const res = await dispatch(adminLogin(body));
+      // if (res?.status == 200 || res?.success == true) {
+      //   toast.success(res?.message);
+      //   navigate("/dashboard", { replace: true });
+      // } else {
+      //   toast.error(res?.message);
+      // }
     },
   });
   return (

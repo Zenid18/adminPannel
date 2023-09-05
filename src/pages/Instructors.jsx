@@ -46,6 +46,7 @@ export default function Instructors() {
         .required('Confirm Password is required'),
     }),
     onSubmit: async () => {
+      document.getElementById("closeAddModal").click()
       const body = {
         first_name: formik?.values?.firstName,
         last_name: formik?.values?.lastName,
@@ -55,19 +56,19 @@ export default function Instructors() {
         user_code: formik?.values?.userCode,
       }
       const res = await dispatch(addTeacher(body));
-      if (res?.status == 200 || res?.success == true) {
-        document.getElementById("closeAddModal").click()
-        toast.success(res?.message);
-        handleTeacherListing()
-        formik.setFieldValue('firstName', '');
-        formik.setFieldValue('lastName', '')
-        formik.setFieldValue('email', '')
-        formik.setFieldValue('password', '')
-        formik.setFieldValue('confirmPass', '')
-        formik.setFieldValue('userCode', '')
-      } else {
-        toast.error(res?.message);
-      }
+      // if (res?.status == 200 || res?.success == true) {
+      //   document.getElementById("closeAddModal").click()
+      //   toast.success(res?.message);
+      //   handleTeacherListing()
+      //   formik.setFieldValue('firstName', '');
+      //   formik.setFieldValue('lastName', '')
+      //   formik.setFieldValue('email', '')
+      //   formik.setFieldValue('password', '')
+      //   formik.setFieldValue('confirmPass', '')
+      //   formik.setFieldValue('userCode', '')
+      // } else {
+      //   toast.error(res?.message);
+      // }
     }
   });
 
